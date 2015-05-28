@@ -96,10 +96,10 @@ task usercontrol()
 		//if holding right trigger down, move conveyer in "negative" direction
 		//else, hold motors
 
-		if(SensorValue(vexRT(Btn5U) == 1){
+		if(SensorValue(vexRT(Btn5U) == 1)){
 			startMotor(conveyerElevator, 127);
 		}
-		else if(SensorValue(vexRT(Btn5D) == 1){
+		else if(SensorValue(vexRT(Btn5D) == 1)){
 			startMotor(conveyerElevator, -127);
 		}
 		else{
