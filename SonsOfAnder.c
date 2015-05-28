@@ -1,6 +1,6 @@
 #pragma config(Sensor, in1,    conveyerAngle,  sensorPotentiometer)
 #pragma config(Sensor, in2,    lineFollower,   sensorLineFollower)
-#pragma config(Sensor, in3,    leftOrRight,    sensorPotentiometer)
+#pragma config(Sensor, in3,    position,       sensorPotentiometer)
 #pragma config(Motor,  port1,           flashlight,    tmotorVexFlashlight, openLoop, reversed)
 #pragma config(Motor,  port2,           rightMotor,    tmotorVex393HighSpeed_MC29, openLoop)
 #pragma config(Motor,  port3,           leftMotor,     tmotorVex393HighSpeed_MC29, openLoop, reversed)
@@ -33,8 +33,23 @@ void moveConveyer(int angle){
 		if(SensorValue(conveyerAngle) > angle)
 			startMotor(conveyerElevator, -15);
 	}
-	//moves conveyer to designated angle
+
 }
+//method to move conveyer to designated angle
+
+
+void startConveyerUp(bool up){
+	if(up){
+		startMotor(leftConveyer,127);
+		startMotor(rightConveyer,127);
+	}
+	else{
+		startMotor(leftConveyer,-127);
+		startMotor(rightConveyer,-127);
+	}
+}
+//method to start conveyer belt
+//if up, spool up, else spool down
 
 
 void pre_auton()
@@ -51,7 +66,7 @@ void pre_auton()
 task autonomous()
 {
 
-	int place = SensorValue(leftOrRight)/1024;
+	int place = SensorValue(position)/1024;
 	//produces value that tells robot its starting position
 	//0 = blue, right
 	//1 = blue, left
@@ -67,30 +82,36 @@ task autonomous()
 		stopMotor(leftMotor);
 		stopMotor(rightMotor);
 	}
-	//move forward until linefollower detects line
+	//move forward (at half speed) until linefollower detects line
 
 
 	if(place==0){
 
 	}
 	//aim for 9in goal
+	//turn right; move far
 	if(place==1){
 
 	}
 	//aim for 21in goal
+	//turn left; move not far
 	if(place==2){
 
 	}
 	//aim for 21in goal
+	//turn right; move not far
 	if(place==3){
 
 	}
 	//aim for 9 goal
+	//turn left; move far
+
 	//turn until on correct orientation
 	//drive until goalpost
 	//align conveyer elevation
 
-
+	startConveyerUp(false);
+	wait(5);
 	//deposit cubes
 	//????
 	//win the game
@@ -108,25 +129,23 @@ task usercontrol()
 		//moving-the-robot stuff; don't know how it works
 
 		if(SensorValue(vexRT(Btn6U) == 1)){
-			startMotor(leftConveyer, 127);
-			startMotor(rightConveyer, 127);
+			startConveyerUp(true);
 		}
 		else if(SensorValue(vexRT(Btn6D) == 1)){
-			startMotor(leftConveyer, -127);
-			startMotor(rightConveyer, -127);
+			startConveyerUp(false);
 		}
-		else {
+		else{
 			stopMotor(leftConveyer);
 			stopMotor(rightConveyer);
 		}
-		//if holding right trigger up, move conveyer in "positive" direction
-		//if holding right trigger down, move conveyer in "negative" direction
+		//if holding right trigger up, move conveyer up
+		//if holding right trigger down, move conveyer down
 		//else, hold motors
 
-		if(SensorValue(vexRT(Btn5U) == 1)){
+		if(SensorValue(vexRT(Btn5U)==1)){
 			startMotor(conveyerElevator, 127);
 		}
-		else if(SensorValue(vexRT(Btn5D) == 1)){
+		else if(SensorValue(vexRT(Btn5D)==1)){
 			startMotor(conveyerElevator, -127);
 		}
 		else{
