@@ -46,10 +46,10 @@ task main()
 		}//arcade controls; pray to god they work
 
 		//CONVEYER SPOOLING
-		if(SensorValue(vexRT(Btn6U) == 1)){
+		if(vexRT(Btn6U) == 1){
 			startConveyerUp(true);
 		}
-		else if(SensorValue(vexRT(Btn6D) == 1)){
+		else if(vexRT(Btn6D) == 1){
 			startConveyerUp(false);
 		}
 		else{
@@ -61,10 +61,10 @@ task main()
 		//else, hold motors
 
 		//CONVEYER ELEVATION
-		if(SensorValue(vexRT(Btn5U)==1)){
+		if(vexRT(Btn5U)==1){
 			startMotor(conveyerElevator, 127);
 		}
-		else if(SensorValue(vexRT(Btn5D)==1)){
+		else if(vexRT(Btn5D)==1){
 			startMotor(conveyerElevator, -127);
 		}
 		else{
