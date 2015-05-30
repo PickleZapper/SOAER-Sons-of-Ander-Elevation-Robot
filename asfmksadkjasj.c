@@ -13,6 +13,7 @@
 task main()
 {
 	bool tank = true;
+	bool locked = false;
 	while(true){
 
 		//MOVEMENT
@@ -37,7 +38,7 @@ task main()
 		}
 
 		//CONVEYER SPOOLING
-		if(vexRT[Btn6U] == 1){
+		if(vexRT[Btn6U] == 1 || locked){
 			startMotor(leftConveyer,127);
 			startMotor(rightConveyer,127);
 		}
@@ -54,11 +55,11 @@ task main()
 		//else, hold motors
 
 		//CONVEYER ELEVATION
-		if((vexRT[Btn5U]==1)){
+		if(vexRT[Btn5U]==1){
 			startMotor(conveyerElevator, 127);
 		}
-		else if((vexRT[Btn5D]==1)){
-			startMotor(conveyerElevator, -127);
+		else if(vexRT[Btn5D]==1){
+			startMotor(conveyerElevator, -63);
 		}
 		else{
 			stopMotor(conveyerElevator);
